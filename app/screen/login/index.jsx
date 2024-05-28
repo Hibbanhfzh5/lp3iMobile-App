@@ -7,7 +7,8 @@ import {
   ImageBackground,
   Dimensions,
   Image,
-  ScrollView
+  ScrollView, Alert
+
 } from 'react-native';    
 
 
@@ -19,13 +20,28 @@ import {ICfacebook, ICgoogle } from '../../../assets'
 
 const windowWidth = Dimensions.get('window').width;
 
-export default function LoginScreen(){
+export default function LoginScreen({navigation}){
   const [email, onChangeEmail] = React.useState('')
   const [pasword, onChangePassword] = React.useState('')
 
   const onSubmitLogin =()=>{
-    alert(email)
+    try{
+      if(email.trim().length === 0) {0
+        throw Error('Email is required')
+      }
+      if(pasword.trim().length === 0) {
+        throw Error('Password is required')
+      }
+      
+   navigation.navigate('Home')
+  }catch(err){
+    Alert.alert('Error', err.message,[
+      {text: 'OK', onPress: () =>{
+        console.log('ERR')
+      }},
+    ]);
   }
+  } 
 
   return (
     <ScrollView>
@@ -68,7 +84,7 @@ export default function LoginScreen(){
             color='#000113'
             title="Login"/>
         </View>
-
+      <Text style={style.textContinueStyle} >Or Continue With</Text>
         <View style={style.btncontainer} >
         <MyButton
         text="Google"
@@ -81,8 +97,14 @@ export default function LoginScreen(){
         imgUrl={ICfacebook}
         />
 
+        
 
         </View>
+        <View style={style.containerbottom} >
+          <Text>Don't have an account?</Text>
+          <Text style={{fontWeight: 'bold'}} >Create Now</Text>
+        </View>
+
       </View>
     </ScrollView>
   );
@@ -90,7 +112,7 @@ export default function LoginScreen(){
 
 const style = StyleSheet.create({
   container: { 
-    padding:20
+    padding:20,
   },
   textInputStyle:{
     height: 40,
@@ -104,6 +126,18 @@ const style = StyleSheet.create({
     fontWeight:'bold',
     textAlign:'center'
   },
+
+  textContinueStyle: {
+    textAlign: 'center',
+    marginBottom: 12
+  },
+
+  containerbottom: {
+    padding:15,
+    flex:1,
+    flexDirection:'row',
+    justifyContent:'center'
+  },
   brandStyle:{
     marginTop:100,
     alignItems:'center',
@@ -111,7 +145,7 @@ const style = StyleSheet.create({
   },
 
   btncontainer: {
-    flex:1,
+    flex:2,
     flexDirection: 'row',
     paddingRight:20,
     paddingLeft:20
