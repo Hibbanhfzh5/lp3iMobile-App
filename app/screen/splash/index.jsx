@@ -1,43 +1,36 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-
-
-
+import { useEffect } from 'react';
 
 export default function SplashScreen({navigation}){
-    useEffect(() => {   
+    useEffect(()=>{
         setTimeout(()=>{
             navigation.replace('Login')
-        },5000);
-        },[navigation])
+        }, 5000);
+    },[navigation])
 
     return (
-
-        <LinearGradient colors={['#4c669f', '#3b5998' , '#192f6a']}
-        style={styles.LinearGradient}
-        >
-        <View style={styles.textcontainer} >
-          <Text style={styles.textsplash} >Facebook</Text>
-        </View>
+        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} 
+            style={styles.linearGradient}>
+            <View style={styles.textContainer}>
+                <Text style={styles.textSpalash}>Facebook</Text>
+            </View>
         </LinearGradient>
-      );
+    );
 }
 
-const styles = StyleSheet.create ({
-    LinearGradient: {
-        flex:1
+const styles = StyleSheet.create({
+    linearGradient: {
+        flex: 1,
     },
-    textcontainer: {
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center'
+    textContainer:{ 
+        flex: 1, 
+        alignItems: 'center', 
+        justifyContent: 'center' 
     },
-    textsplash: {
-        color: 'white',
-        fontSize: 50,
-        fontWeight: 'bold',
-        textAlign: 'center'
-
+    textSpalash:{
+        color:'white',
+        fontSize:25,
+        fontWeight:'bold'
     }
 })

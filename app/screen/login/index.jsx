@@ -7,15 +7,13 @@ import {
   ImageBackground,
   Dimensions,
   Image,
-  ScrollView, Alert
-
-} from 'react-native';    
-
-
-import { MyButton } from '../../components'     
+  ScrollView,
+  Alert,
+  TouchableOpacity
+} from 'react-native';  
+import { MyButton, FbButton } from '../../components' 
+import { ICFacebook, ICGoogle } from '../../../assets'       
 import React from 'react'
-import {ICfacebook, ICgoogle } from '../../../assets'
-
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -26,27 +24,32 @@ export default function LoginScreen({navigation}){
 
   const onSubmitLogin =()=>{
     try{
-      if(email.trim().length === 0) {0
+      if(email.trim().length === 0 ){
         throw Error('Email is required')
       }
-      if(pasword.trim().length === 0) {
+
+      if(pasword.trim().length === 0 ){
         throw Error('Password is required')
       }
-      
-   navigation.navigate('Home')
-  }catch(err){
-    Alert.alert('Error', err.message,[
-      {text: 'OK', onPress: () =>{
-        console.log('ERR')
-      }},
-    ]);
+
+      navigation.replace("Home")
+    }catch(err){
+      Alert.alert('Error', err.message, [
+        {text: 'OK', onPress: () => {
+          console.log('ERR')
+        }},
+      ]);
+    }
   }
-  } 
+
+
+  const onRegister=()=>{
+    navigation.navigate("RegisterName")
+  }
 
   return (
     <ScrollView>
       <View>
-       
         <View style={{ width: windowWidth, height: 400}}>
           <ImageBackground 
             source={ require('../../../assets/images/Subtract.png') } 
@@ -79,32 +82,34 @@ export default function LoginScreen({navigation}){
             placeholderTextColor='#c7c7c7'
             value={pasword}/>
 
-          <Button
+          <FbButton
             onPress={onSubmitLogin}
-            color='#000113'
             title="Login"/>
-        </View>
-      <Text style={style.textContinueStyle} >Or Continue With</Text>
-        <View style={style.btncontainer} >
-        <MyButton
-        text="Google"
-        imgUrl={ICgoogle}
-        />
 
-        <MyButton
-        style={{marginLeft:15}}
-        text="Facebook"
-        imgUrl={ICfacebook}
-        />
-
-        
-
-        </View>
-        <View style={style.containerbottom} >
-          <Text>Don't have an account?</Text>
-          <Text style={{fontWeight: 'bold'}} >Create Now</Text>
+            
         </View>
 
+        <Text style={style.textContinueStyle}>
+          Or continue with
+        </Text>
+
+        <View style={style.btnContainer}>
+          <MyButton
+            text="Google"
+            imgUrl={ICGoogle}/>
+
+          <MyButton
+            style={{marginLeft:15}}
+            text="Facebook"
+            imgUrl={ICFacebook}/>
+        </View>
+
+        <View style={style.containerBottom}>
+          <Text>Don't have account? </Text>
+          <TouchableOpacity onPress={onRegister}>
+            <Text style={{fontWeight:'bold'}}>Create now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -112,7 +117,7 @@ export default function LoginScreen({navigation}){
 
 const style = StyleSheet.create({
   container: { 
-    padding:20,
+    padding:20
   },
   textInputStyle:{
     height: 40,
@@ -125,35 +130,31 @@ const style = StyleSheet.create({
     marginTop:150,
     fontWeight:'bold',
     textAlign:'center'
-  },
-
-  textContinueStyle: {
-    textAlign: 'center',
-    marginBottom: 12
-  },
-
-  containerbottom: {
-    padding:15,
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'center'
+    
   },
   brandStyle:{
     marginTop:100,
     alignItems:'center',
     justifyContent:'center'
   },
-
-  btncontainer: {
-    flex:2,
-    flexDirection: 'row',
-    paddingRight:20,
-    paddingLeft:20
-  },
   textLabel:{
     fontSize:12,
     fontWeight:'bold'
+  },
+  btnContainer:{
+    flex:1,
+    flexDirection:'row',
+    paddingLeft:20,
+    paddingRight:20
+  },
+  textContinueStyle:{
+    textAlign:'center',
+    padding:10
+  },
+  containerBottom:{
+    flex:1,
+    flexDirection:'row',
+    justifyContent:'center',
+    padding:30
   }
-
-
 })
